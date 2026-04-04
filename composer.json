@@ -10,16 +10,20 @@
     "license": "MIT",
     "require": {
         "php": "^8.5",
+        "laravel-lang/lang": "~15.29.2",
         "laravel/framework": "^13.0",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "swatty007/faker-image-generator": "3.0.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2.5",
         "laravel/pint": "^1.27",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
+        "pestphp/pest-plugin-browser": "^4.3",
         "phpunit/phpunit": "^12.5.12"
     },
     "autoload": {
