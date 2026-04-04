@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Collection;
+use Laravel\Pennant\Feature;
 
 class TweetService
 {
@@ -45,6 +46,11 @@ class TweetService
             $tweet->user_id = $userId;
             $tweet->content = $content;
             $tweet->save();
+
+            if (!Feature::active('image.upload')) {
+                return;
+            }
+
             /** @var UploadedFile $image */
             foreach ($images as $image) {
                 Storage::disk('public')->putFile('images', $image);
