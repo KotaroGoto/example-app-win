@@ -14,7 +14,9 @@
         "laravel/framework": "^13.0",
         "laravel/pennant": "^1.23",
         "laravel/tinker": "^3.0",
-        "swatty007/faker-image-generator": "3.0.0"
+        "swatty007/faker-image-generator": "3.0.0",
+        "symfony/http-client": "^8.0",
+        "symfony/mailgun-mailer": "^8.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
