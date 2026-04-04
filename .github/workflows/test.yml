@@ -1,4 +1,3 @@
-#２回目
 name: Test
 
 on:
@@ -6,13 +5,17 @@ on:
   pull_request:
 
 env:
+  # ▼ 修正1：LaravelにMySQLサービスへ接続させるための情報を追加
+  DB_CONNECTION: mysql
+  DB_HOST: 127.0.0.1
+  DB_PORT: 3306
+  DB_DATABASE: testing
   DB_USERNAME: sail
   DB_PASSWORD: password
   MAIL_FROM_ADDRESS: info@example.com
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     services:
@@ -38,18 +41,32 @@ jobs:
           php-version: '8.5'
           tools: composer:v2
       - uses: actions/checkout@v4
+
+      # ▼ 修正2：.env.testing だけでなく、基盤となる .env も作成する
       - name: Copy .env
-        run: cp .env.example .env.testing
+        run: |
+          cp .env.example .env
+          cp .env.example .env.testing
+
+      # ▼ 修正3：--no-scripts を削除してパッケージディスカバリーを実行させる
+      # （※存在しないcacheステップを参照していた if 条件も削除しました）
       - name: Install Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-progress --prefer-dist
+
+      # ▼ 修正4：キーの生成を両方のファイルに適用する
       - name: Generate key
-        run: php artisan key:generate --env testing
+        run: |
+          php artisan key:generate
+          php artisan key:generate --env testing
+
       - name: Set hostname
         run: sudo echo "127.0.0.1 mysql" | sudo tee -a /etc/hosts
+        
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: vendor/bin/phpunit
+        
       - name: Execute code style checks via Pint
         run: vendor/bin/pint
+        
       - name: Execute static analysis via PHPStan
         run: vendor/bin/phpstan

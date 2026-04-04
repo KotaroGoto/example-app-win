@@ -17,7 +17,7 @@ class DeleteTest extends TestCase
     public function test_delete_succeeds(): void
     {
 
-        $user = User::factory()->create(); // ユーザーを作成
+        $user = User::factory()->create();
 
         $tweet = Tweet::factory()->create(['user_id' => $user->id]);
 
