@@ -4,6 +4,7 @@ namespace Tests\Unit\Services;
 
 use App\Services\TweetService;
 use Mockery;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,7 @@ class TweetServiceTest extends TestCase
      * A basic unit test example.
      */
     #[RunInSeparateProcess]
+    #[PreserveGlobalState('disabled')]
     public function test_check_own_tweet(): void
     {
         $tweetService = new TweetService;

@@ -14,7 +14,15 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase;
     private const FLAG = 'image.upload';
+	
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutVite();
+    }
+
     public function test_グローバルフラグが有効ならゲストも画像を閲覧できる(): void
+
     {
         $this->prepareFlags();
         $image = $this->prepareTweetWithImage();
